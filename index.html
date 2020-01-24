@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Index</title>
+</head>
+
+<body>
+    <p>Hola mundo</p>
+
+   <button onclick="GetDatos()">Click</button>
+   <ul class="lista">
+</body>
+<script src="public/assets/jquery.min.js"></script>
+<script>
+
+    var invocacion = new XMLHttpRequest();
+    var url = 'http://localhost:3000/users/';
+
+
+
+    function GetDatos() {
+            
+        $.ajax({
+            dataType:'json',
+            url : url,
+            type: 'get',
+            success: function (data) {
+                var items = [];
+                $.each(data, function(i, val){
+                    items.push("<li id='"+ val.id +"'>" + " CI:"+val.ci+ " "+ val.nombre + " " + val.ap + " "+ val.am + " Estado:"+val.estado + " Tipo:"+val.tipo+"</li>");
+                });
+
+                $("<ul/>", {
+                    "class":"lista",
+                    html:items.join("")
+                }).appendTo("body")
+                console.log("res: ", data);
+            },
+            error: function (jqXHR, estado, error) {
+                console.log(estado)
+                console.log(error)
+                console.log(jqXHR)
+                console.log("Upps ocurrio algo!!!");
+            }
+        });
+    }
+</script>
+
+</html>
